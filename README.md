@@ -24,11 +24,19 @@ $ solana airdrop 1000 //big amount is only possible for local network, on devnet
 ```
 
 ### Anchor To Build and Test the program
+Initialize the program the first time: 
 ```
 $ anchor init counter
 $ cd counter && rm -r .git
-$ anchor build
 ```
+OR
+update existing counter/anchor.toml file
+```
+[provider]
+cluster = "Localnet"
+#cluster = "devnet"
+```
+Build the Rust program: `$ anchor build`
 ... should give you:
 - "target/deploy/xyz-keypair.json". Keep this keypair secret because only that keypair json file can upgrade the deployed program! You can reuse it on all clusters. This keypair should contain the public key from your `declare_id!()` in your Solana program, also that public key should match the result from `anchor keys list`
 
@@ -118,3 +126,24 @@ Program Id                                   | Slot      | Authority | Balance
 C21vgVwS2X1g9XmSyJPFtLfrob5zwwoij54L7Rq6dmes | 306287597 | abc123... | 1.43735832 SOL
 ```
 The above is all the programs owned by your wallet, which can be found by `solana address`
+
+### Setup Frontend in NextJs
+```
+$ pnpm create next-app
+```
+
+See reference on Solana Wallet Adapter: https://github.com/anza-xyz/wallet-adapter/blob/master/APP.md
+
+Install adapter packages:
+```
+pnpm install --save \
+    @solana/wallet-adapter-base \
+    @solana/wallet-adapter-react \
+    @solana/wallet-adapter-react-ui \
+    @solana/wallet-adapter-wallets \
+    @solana/web3.js @coral-xyz/anchor
+```
+
+Add your deployed program address in the setup.ts file:
+`const programId = new PublicKey("YOUR_DEPLOYED_PROGRAM_ADDRESS"); `
+
