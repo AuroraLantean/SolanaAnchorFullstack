@@ -6,13 +6,18 @@ skip-lint = false
 
 [programs.localnet]
 counter = "C21vgVwS2X1g9XmSyJPFtLfrob5zwwoij54L7Rq6dmes"
+[programs.devnet]
+counter = "C21vgVwS2X1g9XmSyJPFtLfrob5zwwoij54L7Rq6dmes"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
+#cluster = "Localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+
+test1 = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/xyz1.ts"
