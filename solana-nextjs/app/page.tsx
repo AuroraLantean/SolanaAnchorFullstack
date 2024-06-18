@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import React, { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { UnsafeBurnerWalletAdapter } from '@solana/wallet-adapter-wallets';
@@ -10,6 +10,10 @@ import {
     WalletMultiButton
 } from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl } from '@solana/web3.js';
+import CounterState from "@/components/counter-state";
+import IncrementButton from "@/components/increment-button";
+import Link from "next/link";
+import { SendSOL } from "@/components/send-sol";
 
 // Default styles that can be overridden by your app
 require('@solana/wallet-adapter-react-ui/styles.css');
@@ -42,7 +46,7 @@ export default function Home() {
         [network]
     );
 
-  return (
+    return (
     <ConnectionProvider endpoint={endpoint}>
     <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
@@ -50,10 +54,15 @@ export default function Home() {
             <h1>Hello Solana</h1> 
             <WalletMultiButton />
             <WalletDisconnectButton />
-
+            <CounterState />
+            <IncrementButton />
+            
+            <SendSOL />
+            <br />
+            <Link href="https://faucet.solana.com/">Get some Devnet SOL</Link>
             </main>
         </WalletModalProvider>
     </WalletProvider>
-</ConnectionProvider>
-  );
+    </ConnectionProvider>
+    );
 }

@@ -110,6 +110,9 @@ cluster = "devnet"
 Then run `anchor test` without skipping the local validator
 
 ### If deployment failed
+Error: `Recover the intermediate account's ephemeral keypair file with solana-keygen recover... `. 
+Here is how to solve it: `solana program deploy --buffer ~/.config/solana/id.json --upgrade-authority ~/.config/solana/id.json --program-id target/deploy/counter-keypair.json target/deploy/counter.so`
+
 Claim devnet SOL back
 ```
 solana program show --buffers
@@ -128,22 +131,20 @@ C21vgVwS2X1g9XmSyJPFtLfrob5zwwoij54L7Rq6dmes | 306287597 | abc123... | 1.4373583
 The above is all the programs owned by your wallet, which can be found by `solana address`
 
 ### Setup Frontend in NextJs
-```
-$ pnpm create next-app
-```
-
 See reference on Solana Wallet Adapter: https://github.com/anza-xyz/wallet-adapter/blob/master/APP.md
 
-Install adapter packages:
+Install frontend packages:
 ```
-pnpm install --save \
-    @solana/wallet-adapter-base \
-    @solana/wallet-adapter-react \
-    @solana/wallet-adapter-react-ui \
-    @solana/wallet-adapter-wallets \
-    @solana/web3.js @coral-xyz/anchor
+cd solana-nextjs && pnpm install
 ```
 
-Add your deployed program address in the setup.ts file:
-`const programId = new PublicKey("YOUR_DEPLOYED_PROGRAM_ADDRESS"); `
+Make sure your frontend `@coral-xyz/anchor` version matches your Rust `anchor-lang` version
 
+Set your wallet to connect to the Devnet.
+
+Run the frontend: `bun dev`
+
+Get some Devnet SOL from https://faucet.solana.com/
+
+### Deploy the frontend
+To deploy via vercel CLI: `vercel .`
